@@ -28,8 +28,8 @@ Coral's incremental view maintenance (IVM) is an **explicit, opt-in, library-bas
 │                         CORAL INCREMENTAL                           │
 │                                                                     │
 │  ┌──────────────┐    ┌─────────────────────────┐    ┌────────────┐  │
-│  │ SQL String   │───▶│ HiveToRelConverter      │───▶│ RelNode    │  │
-│  │ (Hive/Spark) │    │ or TrinoToRelConverter   │    │ (Calcite) │  │
+│  │ SQL String   │────│ HiveToRelConverter      │────│ RelNode    │  │
+│  │ (Hive/Spark) │    │ or TrinoToRelConverter  │    │ (Calcite)  │  │
 │  └──────────────┘    └─────────────────────────┘    └─────┬──────┘  │
 │                                                           │         │
 │                                                           ▼         │
