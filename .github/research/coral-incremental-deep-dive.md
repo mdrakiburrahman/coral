@@ -1,5 +1,38 @@
 # Coral Incremental View Maintenance: Deep Dive Research
 
+## Prompt
+
+```text
+/research
+
+Help me understand how this Coral git repo works in Apache Spark and dbt with respect to incremental view maintenance.
+
+In particular, does it use a Spark Plugin?
+
+What's an example of a self-contained Spark Job/Conf/SQL statements on how it will incrementalize SQL queries.
+
+How does it ensure AST operator coverage, correctness, perf.
+Does it have fallback to full refresh? Or is it always guaranteed to rewrite ANY SQL query 100% incrementally?
+
+Pop your work in here:
+
+"""
+C:\git\coral\.github\research
+"""
+
+When using dbt, how does it know what dialect to translate?
+
+Can I hook it into any Spark job and it rewrites transparently? Or is it an explicit invocation from the caller to TAKE a query, REWRITE it, THEN use THAT incremental query?
+
+In other words, does it intercept things at the Spark Engine/Query Listener level, or is it opt-in from the caller where the caller makes the decision.
+
+Also, find OTHER production usages of coral incremental:
+
+1. This repo unit/tests
+2. Other repos that use it
+3. dbt and Spark please
+```
+
 ## Executive Summary
 
 Coral's incremental view maintenance (IVM) is an **explicit, opt-in, library-based SQL rewriter** — it does **NOT** use a Spark Plugin, SparkSessionExtensions, or any query interception mechanism. The caller explicitly invokes Coral's `RelNodeIncrementalTransformer` (or the REST API) to take a SQL query, rewrite it to an incremental version, and then the caller executes the rewritten query themselves. The system currently supports a **limited subset** of SQL operators (SELECT, JOIN, FILTER, PROJECT, UNION, AGGREGATE) and has **no built-in fallback to full refresh** — unsupported operators will either throw exceptions or produce incorrect results. The dbt integration works by calling Coral Service's REST endpoint at build time, generating Spark Scala code that leverages Apache Iceberg's time-travel to compute deltas.
