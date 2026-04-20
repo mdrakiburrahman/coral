@@ -45,7 +45,7 @@ Coral's incremental view maintenance (IVM) is an **explicit, opt-in, library-bas
 │                                              │ (tables → _delta)  │ │
 │                                              └─────────┬──────────┘ │
 │                                                        │            │
-│                    ┌───────────────────────────────────┬┘           │
+│                    ┌──────────────────────────────────┬┘            │
 │                    ▼                                   ▼            │
 │  ┌──────────────────────────┐      ┌──────────────────────────┐     │
 │  │ CoralSpark.getSparkSql() │      │ RelToTrinoConverter      │     │
